@@ -1,23 +1,20 @@
+<script>
+    let activeMenu=$state(false)
+</script>
 <div class="layout-container">
-    <input type="checkbox" id="drawer-toggle">
-
 <div class="drawer">
 
     <!-- Burger open -->
-    <label for="drawer-toggle" class="burger">
-        ☰
-    </label>
+    <button class="burger" on:click={()=>activeMenu=!activeMenu}>
+        {#if activeMenu}
+           <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24"><!-- Icon from Myna UI Icons by Praveen Juge - https://github.com/praveenjuge/mynaui-icons/blob/main/LICENSE --><path fill="currentColor" d="M6.707 5.293a1 1 0 0 0-1.414 1.414L10.586 12l-5.293 5.293a1 1 0 1 0 1.414 1.414L12 13.414l5.293 5.293a1 1 0 0 0 1.414-1.414L13.414 12l5.293-5.293a1 1 0 0 0-1.414-1.414L12 10.586z"/></svg>
+        {:else}
+            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/></svg>
+        {/if}
+    </button>
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-
-        <!-- Burger close -->
-        <label for="drawer-toggle" class="burger-menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                    d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/>
-            </svg>
-        </label>
+    <aside class="sidebar" class:active={activeMenu}>
 
         <ul class="menu">
             <li>Stolon Edu</li>
@@ -59,8 +56,7 @@
     }
 
     .layout-container {
-        display: grid;
-        grid-template-columns: 260px 1fr 300px;
+        
         height: 100vh;
         width: 100vw;
         box-sizing: border-box;
@@ -80,10 +76,10 @@
     position: fixed;
     top: 16px;
     left: 16px;
-    font-size: 26px;
+    font-size: 2rem;
     background: #202123;
     color: white;
-    padding: 10px 14px;
+    padding: 1px 2px;
     border-radius: 6px;
     cursor: pointer;
     z-index: 1001;
@@ -104,7 +100,7 @@
     }
 
     /* Open drawer */
-    #drawer-toggle:checked ~ .drawer .sidebar { 
+    .active{ 
     left:0;
     }
     
@@ -124,6 +120,7 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
+    padding-top: 3rem;
     }
 
     .menu li {
