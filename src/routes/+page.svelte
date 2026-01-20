@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from 'svelte';
     import { marked } from 'marked';
 
     let activeMenu = $state(false);
@@ -91,7 +90,8 @@
     </div>
 
 
-    <div class="chat-area">
+    <div class="chat-area" class:startup={messages.length === 0}>
+        <img src="/StolonLogo.png" alt="Stolon Logo" style="width: 200px; height: 200px;"/>
         <h1>What are you searching today</h1>
         
         <div class="messages-container" bind:this={chatContainer}>
@@ -208,7 +208,7 @@
         box-sizing: border-box;
         position: relative;
         z-index: 1; /* Ensure content is above the grid */
-    }
+    }    
 
     /* Burger open */
     .burger {
@@ -279,12 +279,14 @@
         align-items: center;
         width: 100%;
         height: 100vh;
-        position: relative;
+        /* position: relative; removed to avoid conflict with flex flow if not needed, but can stay. Flex is key */
         color: #000000;
+        /* No transition on justify-content needed */
     }
 
+    /* Deleted .chat-area.startup */
+
     .chat-area h1 {
-        margin-top: 160px;
         font-size: 2.5rem;
         font-weight: 600;
         opacity: 0.9;
@@ -293,19 +295,24 @@
     }
 
     .messages-container {
-        flex: 1;
+        flex-grow: 1; /* Grow to fill space */
         width: 100%;
         max-width: 800px;
         overflow-y: auto;
-        padding-bottom: 120px; /* Space for input area */
+        padding-bottom: 20px; /* Reduced padding */
         display: flex;
         flex-direction: column;
         gap: 20px;
         padding-top: 20px;
-        
-        /* Hide scrollbar */
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
+        transition: flex-grow 0.8s cubic-bezier(0.16, 1, 0.3, 1), padding 0.8s ease; /* Smooth toggle */
+        min-height: 0; /* Important for flex smooth collapse */
+    }
+
+    .chat-area.startup .messages-container {
+        flex-grow: 0.0001; /* Animates to almost 0 */
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
     }
 
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -383,15 +390,17 @@
     }
 
     .input-area {
-        position: fixed;
-        bottom: 0;
-        width: calc(100% - 260px - 300px); /* Adjust based on grid layout */
+        width: 100%;
+        max-width: 100%;
         padding: 24px;
         background: transparent;
         display: flex;
         justify-content: center;
-        pointer-events: none; /* Allow grid to be seen/clicked through where empty */
+        flex-shrink: 0; /* Prevents squishing */
+        z-index: 10;
     }
+
+    /* .chat-area.startup .input-area removed as it is same layout just shifted by flex sibling */
 
     .input-wrapper {
         width: 100%;
