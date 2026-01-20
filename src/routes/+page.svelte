@@ -84,6 +84,25 @@
                 <li>Stolon Business</li>
                 <li>Stolon Computerization</li>
             </ul>
+            <div class="cards-area" class:card-active={activeMenu}>
+        <div class="card">
+            <h4>Φτιάξε το δικο σου site</h4>
+            <p class="price">ΜΟΝΟ ΜΕ</p>
+            <ul>
+                <li>250€</li>
+            </ul>
+            <button>Ενεργοποίηση</button>
+        </div>
+
+        <div class="card">
+            <h4>Ακομα εισαι στην microsoft 360;</h4>
+            <p class="price">ΜΠΕΣ ΤΩΡΑ ΣΤΟ .... ΜΕ</p>
+            <ul>
+                <li>1€</li>
+            </ul>
+            <button>Δοκιμή 14 ημερών</button>
+        </div>
+    </div>
 
         </aside>
 
@@ -536,6 +555,7 @@
         box-shadow: 0 0 15px rgba(62, 155, 69, 0.4);
     }
 
+<<<<<<< HEAD
 
 
     .messageBox {
@@ -636,4 +656,156 @@
     color: #d1d5db;
     cursor: default;
     }
+=======
+    @media (max-width: 768px) {
+
+    /* FULLSCREEN SIDEBAR DRAWER (MOBILE) */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100vw;
+        height: 100vh;
+        padding: 24px;
+        background: #ffffff;
+        border-right: none;
+        transition: left 0.35s ease;
+        z-index: 1100;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* OPEN STATE */
+    .sidebar.active {
+        left: 0;
+    }
+
+    /* MENU */
+    .menu {
+        padding-top: 80px;
+        gap: 16px;
+    }
+
+    .menu li {
+        padding: 16px 20px;
+        font-size: 18px;
+    }
+
+    /* BURGER ALWAYS ON TOP */
+    .burger {
+        top: 16px;
+        left: 16px;
+        z-index: 1200;
+    }
+    .cards-area {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            max-height 0.35s ease;
+        pointer-events: none;
+        /* position: static; */
+
+        /* pointer-events: auto; */
+    }
+
+    /* SHOW CARDS WHEN MENU IS OPEN */
+    .cards-area.card-active {
+        opacity: 1;
+        max-height: 1000px; /* enough for cards */
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    /* CARD SPACING */
+    .card {
+        margin-bottom: 16px;
+    }
+
+    .layout-container {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-template-rows: 1fr 6fr 4fr 1fr;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+
+    /* CHAT */
+    .chat-area {
+        height: 100vh;
+        padding-top: 72px; /* space for burger + logo */
+        overflow: hidden;
+    }
+
+    /* TITLE */
+    .chat-area h1 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.4rem;
+        text-align: center;
+        padding: 0 16px;
+    }
+
+    /* MESSAGES SCROLL AREA */
+    .messages-container {
+        flex: 1;
+        width: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        padding: 0 12px 140px; /* bottom space for input */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* INPUT BAR */
+    .input-area {
+        width: 100%;
+        left: 0;
+        padding: 12px;
+        background: linear-gradient(
+            to top,
+            rgba(255,255,255,0.98),
+            rgba(255,255,255,0.9),
+            rgba(255,255,255,0)
+        );
+    }
+
+    .input-wrapper {
+        max-width: 100%;
+        border-radius: 16px;
+    }
+
+    .input-wrapper input {
+        font-size: 16px; /* prevents iOS zoom */
+    }
+
+    /* CARDS (DESKTOP POSITION DISABLED) */
+    .cards-area {
+        position: static;
+        width: 100%;
+        pointer-events: auto;
+    }
+    .logo {
+        display: flex;
+        justify-content: center;
+        margin-top: 72px; /* below burger */
+        margin-bottom: 12px;
+    }
+
+    .img {
+        height: 36px;
+        width: auto;
+    }
+}
+
+
+>>>>>>> media-check
 </style>
