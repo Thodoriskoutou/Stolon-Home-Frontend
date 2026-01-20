@@ -310,8 +310,8 @@
 
     .chat-area.startup .messages-container {
         flex-grow: 0.0001; /* Animates to almost 0 */
-        padding-top: 0;
-        padding-bottom: 0;
+        padding-top: 35px;
+        padding-bottom: 1;
         overflow: hidden;
     }
 
