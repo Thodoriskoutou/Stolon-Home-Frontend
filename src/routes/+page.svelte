@@ -1,11 +1,14 @@
 <script>
     import { marked } from "marked";
+    let { data } = $props();
+    const { chatService } = data;
 
     let activeMenu = $state(false);
     let leftIconActive = $state(false);
     /** @type {Array<{role: string, content: string}>} */
     let messages = $state([]);
     let userInput = $state("");
+    let isGenerating = $state(false);
     /** @type {HTMLElement} */
     let chatContainer;
 
@@ -17,7 +20,6 @@
     }
 
     $effect(() => {
-        // Run only on browser
         if (typeof localStorage !== "undefined") {
             loadMessages();
         }
@@ -39,19 +41,30 @@
     }
 
     async function sendMessage() {
-        if (!userInput.trim()) return;
+        if (!userInput.trim() || isGenerating) return;
 
-        const userMsg = { role: "user", content: userInput };
-        messages = [...messages, userMsg];
         const currentInput = userInput;
         userInput = "";
+        isGenerating = true;
 
-        // Simulate AI response
-        setTimeout(async () => {
-            const aiContent = `Here is a search result for **"${currentInput}"**.\n\n* This is a list item\n* Another item\n\n\`\`\`javascript\nconsole.log('Markdown code block');\n\`\`\``;
-            const aiMsg = { role: "assistant", content: aiContent };
-            messages = [...messages, aiMsg];
-        }, 600);
+        // Add user message
+        const userMsg = { role: "user", content: currentInput };
+        messages = [...messages, userMsg];
+
+        // placeholder for AI response
+        const aiMsg = { role: "assistant", content: "" };
+        messages = [...messages, aiMsg];
+        let responseContent = "";
+
+        // Start streaming
+        await chatService.sendMessage(currentInput, (chunk) => {
+            responseContent += chunk;
+            // Update the last message (AI) with new content
+            messages[messages.length - 1].content = responseContent;
+            scrollToBottom();
+        });
+
+        isGenerating = false;
     }
 
     /** @param {KeyboardEvent} e */
