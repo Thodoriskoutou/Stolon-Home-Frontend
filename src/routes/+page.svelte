@@ -79,30 +79,27 @@
     <aside class="sidebar" class:active={activeMenu}>
 
             <ul class="menu">
-                <li>Stolon Edu</li>
-                <li>Stolon Marketing</li>
-                <li>Stolon Business</li>
-                <li>Stolon Computerization</li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><!-- Icon from TDesign Icons by TDesign - https://github.com/Tencent/tdesign-icons/blob/main/LICENSE --><g fill="none"><path d="M2 8.5L12 2l10 6.5l-4 2.6l-6 3.9l-6-3.9z"/><path d="M6 17.5v-6.4l6 3.9l6-3.9v6.4c0 1.933-2.686 3.5-6 3.5s-6-1.567-6-3.5"/><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M21 9.15V15M6 11.1v6.4c0 1.933 2.686 3.5 6 3.5s6-1.567 6-3.5v-6.4L12 15zM12 2L2 8.5L12 15l10-6.5z"/></g></svg>
+                    Stolon Edu
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><!-- Icon from Remix Icon by Remix Design - https://github.com/Remix-Design/RemixIcon/blob/master/License --><path fill="currentColor" d="M9 17s7 1 10 4h1a1 1 0 0 0 1-1v-6.063a2 2 0 0 0 0-3.874V4a1 1 0 0 0-1-1h-1C16 6 9 7 9 7H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1l1 5h2zm2-8.339c.683-.146 1.527-.35 2.44-.617c1.678-.494 3.81-1.271 5.56-2.47v12.851c-1.75-1.198-3.883-1.975-5.56-2.469A34 34 0 0 0 11 15.34zM5 9h4v6H5z"/></svg>
+                    Stolon Marketing
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 12h.01M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2m14 7a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></g></svg>
+                    Stolon Business
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M1 20q-.425 0-.712-.288T0 19t.288-.712T1 18h1V5q0-.825.588-1.412T4 3h16q.825 0 1.413.588T22 5v13h1q.425 0 .713.288T24 19t-.288.713T23 20zm9.5-2h3q.2 0 .35-.15t.15-.35t-.15-.35t-.35-.15h-3q-.2 0-.35.15t-.15.35t.15.35t.35.15M4 15h16V5H4zm8-5"/></svg>
+                    Stolon Computerization
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73A2 2 0 1 0 10 4c0 .74.4 1.39 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1m-1 3h-2v3H5v-3H3v-1h2v-2c0-2.76 2.24-5 5-5h4c2.76 0 5 2.24 5 5v2h2zM8.5 13.5l2.36 2.36l-1.18 1.18l-1.18-1.18l-1.18 1.18l-1.18-1.18zm7 0l2.36 2.36l-1.18 1.18l-1.18-1.18l-1.18 1.18l-1.18-1.18z"/></svg>
+                    Stolon AI
+                </li>
             </ul>
-            <div class="cards-area" class:card-active={activeMenu}>
-        <div class="card">
-            <h4>Φτιάξε το δικο σου site</h4>
-            <p class="price">ΜΟΝΟ ΜΕ</p>
-            <ul>
-                <li>250€</li>
-            </ul>
-            <button>Ενεργοποίηση</button>
-        </div>
-
-        <div class="card">
-            <h4>Ακομα εισαι στην microsoft 360;</h4>
-            <p class="price">ΜΠΕΣ ΤΩΡΑ ΣΤΟ .... ΜΕ</p>
-            <ul>
-                <li>1€</li>
-            </ul>
-            <button>Δοκιμή 14 ημερών</button>
-        </div>
-    </div>
 
         </aside>
 
@@ -169,6 +166,7 @@
     
     <div class="cards-area">
         <div class="card">
+            <img src="https://w0.peakpx.com/wallpaper/59/567/HD-wallpaper-web-designing-training-in-pune-web-design-web-design-training-in-pune-website-design-training-web-development-course-in-pune-web-development-training-in-india-website-design-training-in-india.jpg" alt="Website" class="card-image"/>
             <h4>Φτιάξε το δικο σου site</h4>
             <p class="price">ΜΟΝΟ ΜΕ</p>
             <ul>
@@ -178,8 +176,9 @@
         </div>
 
         <div class="card">
+            <img src="https://cdn.thenewstack.io/media/2023/09/94b1d1e3-nextcloud.jpg" alt="Microsoft 365" class="card-image"/>
             <h4>Ακομα εισαι στην microsoft 360;</h4>
-            <p class="price">ΜΠΕΣ ΤΩΡΑ ΣΤΟ .... ΜΕ</p>
+            <p class="price">ΜΠΕΣ ΤΩΡΑ ΣΤΟ NEXTCLOUD ΜΕ</p>
             <ul>
                 <li>1€</li>
             </ul>
@@ -278,7 +277,7 @@
     }
 
     .menu li {
-    padding: 12px 16px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     color: #374151;
@@ -506,6 +505,16 @@
         border-color: #d1d5db;
     }
 
+    /* CARD IMAGE */
+    .card-image {
+        width: 100%;
+        height: 77px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        display: block;
+    }
+
     /* ΤΙΤΛΟΣ */
     .card h4 {
         margin: 0 0 6px;
@@ -531,7 +540,7 @@
     }
 
     .card ul li {
-        font-size: 34px;
+        font-size: 29px;
         font-weight: 800;
         color: #000000;
     }
