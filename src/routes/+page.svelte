@@ -105,12 +105,15 @@
     </div>
 
         </aside>
-
+    
     </div>
 
+<div class="logo-wrapper" class:active={activeMenu}>
+    <img src="/StolonLogo.png" alt="Stolon Logo" style="width: 100px; height: 100px;"/>
+    <img src="/stolonas1.png" alt="Stolon Logo" style="width: 100px; height: 100px;"/>
+    </div>
 
     <div class="chat-area" class:startup={messages.length === 0}>
-        <img src="/StolonLogo.png" alt="Stolon Logo" style="width: 200px; height: 200px;"/>
         <h1>What are you searching today</h1>
         
         <div class="messages-container" bind:this={chatContainer}>
@@ -290,6 +293,25 @@
     background: #f3f4f6;
     color: #3E9B45;
     }
+
+    .logo-wrapper {
+    position: absolute;
+    left: 100px; /* όταν το sidebar είναι κλειστό */
+    display: flex;
+    flex-direction: column; /* stack logos vertically */
+    gap: 10px; /* space between logos */
+    transition: left 0.3s;
+}
+
+.logo-wrapper.active {
+    left: 320px; /* όταν το sidebar ανοίγει */
+}
+
+.logo-wrapper img {
+    width: 120px;  /* προσαρμόζεις μέγεθος ανάλογα */
+    height: auto;  /* κρατάει aspect ratio */
+}
+
     
     .chat-area {
         background-color: transparent;
@@ -734,21 +756,38 @@
         width: 100vw;
         overflow: hidden;
     }
-
-    /* CHAT */
-    .chat-area {
-        height: 100vh;
-        padding-top: 72px; /* space for burger + logo */
-        overflow: hidden;
+    .logo-wrapper {
+        position: relative; /* above chat title, not absolute */
+        top: 0;
+        left: 0;
+        flex-direction: row; /* side by side */
+        justify-content: center;
+        align-items: center;
+        
+        gap: 16px;
+        margin-bottom: 40px; /* space under logos */
     }
 
-    /* TITLE */
-    .chat-area h1 {
-        margin-top: 0;
-        margin-bottom: 12px;
-        font-size: 1.4rem;
-        text-align: center;
-        padding: 0 16px;
+    /* Adjust size for mobile */
+    .logo-wrapper {
+        position: relative; /* όχι fixed ή absolute στο mobile */
+        left: auto; /* αγνόηση desktop left */
+        display: flex;
+        justify-content: center;
+        gap: 16px; /* απόσταση μεταξύ των δύο logos */
+        margin-top: 16px; /* απόσταση από πάνω */
+        margin-bottom: 24px; /* απόσταση από το chat */
+    }
+
+    .logo-wrapper img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+    }
+
+    /* Αν θέλεις να είναι το ένα δίπλα στο άλλο αντί για κάτω-κάτω */
+    .logo-wrapper {
+        flex-direction: row; /* side by side στο mobile */
     }
 
     /* MESSAGES SCROLL AREA */
