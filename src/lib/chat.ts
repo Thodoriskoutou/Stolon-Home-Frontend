@@ -7,15 +7,27 @@ export class ChatService {
     }
 
     private getOrCreateSessionId(): string {
-        if (typeof localStorage !== 'undefined') {
-            let id = localStorage.getItem('chat_session_id');
+    const hasLocalStorage =
+            typeof window !== 'undefined' &&
+            typeof window.localStorage !== 'undefined' &&
+            typeof window.localStorage.getItem === 'function' &&
+            typeof window.localStorage.setItem === 'function';
+
+        if (hasLocalStorage) {
+            let id = window.localStorage.getItem('chat_session_id');
             if (!id) {
-                id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
-                localStorage.setItem('chat_session_id', id);
+                id = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+                    ? crypto.randomUUID()
+                    : Math.random().toString(36).substring(2);
+                window.localStorage.setItem('chat_session_id', id);
             }
             return id;
         }
-        return crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+
+        // Fallback for server or environments without usable localStorage
+        return (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+            ? crypto.randomUUID()
+            : Math.random().toString(36).substring(2);
     }
 
     async sendMessage(message: string, onChunk: (chunk: string) => void): Promise<void> {
