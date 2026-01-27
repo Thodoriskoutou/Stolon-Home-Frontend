@@ -13,12 +13,24 @@
     let chatContainer;
 
     let messageInputel;
-    
-   function autoResize(e) {
-       const el = e.target;
-       el.style.height = "auto";
-       el.style.height = Math.min(el.scrollHeight, 240) + "px"; // cap height
-   }
+    let theme = $state("light");
+
+function toggleTheme() {
+    theme = theme === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+}
+
+$effect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    theme = savedTheme;
+    document.documentElement.setAttribute("data-theme", theme);
+});
+    function autoResize(e) {
+        const el = e.target;
+        el.style.height = "auto";
+        el.style.height = Math.min(el.scrollHeight, 240) + "px"; // cap height
+    }
 
     function loadMessages() {
         const saved = localStorage.getItem("chat_history");
@@ -166,6 +178,16 @@
 
         <aside class="sidebar" class:active={activeMenu}>
             <div class="menu">
+            <div class="toggle-light">
+                <button class="theme-toggle" onclick={toggleTheme}>
+                    {#if theme === "light"}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M12 21q-3.775 0-6.387-2.613T3 12q0-3.45 2.25-5.988T11 3.05q.325-.05.575.088t.4.362t.163.525t-.188.575q-.425.65-.638 1.375T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q.775 0 1.538-.225t1.362-.625q.275-.175.563-.162t.512.137q.25.125.388.375t.087.6q-.35 3.45-2.937 5.725T12 21m0-2q2.2 0 3.95-1.213t2.55-3.162q-.5.125-1 .2t-1 .075q-3.075 0-5.238-2.163T9.1 7.5q0-.5.075-1t.2-1q-1.95.8-3.163 2.55T5 12q0 2.9 2.05 4.95T12 19m-.25-6.75"/></svg>
+                    {:else}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M12 15q1.25 0 2.125-.875T15 12t-.875-2.125T12 9t-2.125.875T9 12t.875 2.125T12 15m0 2q-2.075 0-3.537-1.463T7 12t1.463-3.537T12 7t3.538 1.463T17 12t-1.463 3.538T12 17M2 13q-.425 0-.712-.288T1 12t.288-.712T2 11h2q.425 0 .713.288T5 12t-.288.713T4 13zm18 0q-.425 0-.712-.288T19 12t.288-.712T20 11h2q.425 0 .713.288T23 12t-.288.713T22 13zm-8-8q-.425 0-.712-.288T11 4V2q0-.425.288-.712T12 1t.713.288T13 2v2q0 .425-.288.713T12 5m0 18q-.425 0-.712-.288T11 22v-2q0-.425.288-.712T12 19t.713.288T13 20v2q0 .425-.288.713T12 23M5.65 7.05L4.575 6q-.3-.275-.288-.7t.288-.725q.3-.3.725-.3t.7.3L7.05 5.65q.275.3.275.7t-.275.7t-.687.288t-.713-.288M18 19.425l-1.05-1.075q-.275-.3-.275-.712t.275-.688q.275-.3.688-.287t.712.287L19.425 18q.3.275.288.7t-.288.725q-.3.3-.725.3t-.7-.3M16.95 7.05q-.3-.275-.288-.687t.288-.713L18 4.575q.275-.3.7-.288t.725.288q.3.3.3.725t-.3.7L18.35 7.05q-.3.275-.7.275t-.7-.275M4.575 19.425q-.3-.3-.3-.725t.3-.7l1.075-1.05q.3-.275.712-.275t.688.275q.3.275.288.688t-.288.712L6 19.425q-.275.3-.7.288t-.725-.288M12 12"/></svg>
+                    {/if}
+                </button>
+            </div>
+            <ul class="menu">
                 <li>
                     <div class="menu-item">
                         <svg
@@ -262,26 +284,29 @@
                         Stolon AI
                     </div>
                 </li>
-            </div>
-
-            <!-- Mobile-only cards render here -->
+            </ul>
             <div class="mobile-cards-wrapper">
                 {@render cardsContent()}
             </div>
         </aside>
+        
     </div>
 
     <div class="logo-wrapper" class:active={activeMenu}>
-        <img
-            src="/StolonLogo.png"
-            alt="Stolon Logo"
-            style="width: 150px; height: 150px;"
-        />
-        <!-- <img
-            src="/stolonas1.png"
-            alt="Stolon Logo"
-            style="width: 150px; height: 150px;"
-        /> -->
+        
+                    {#if theme === "light"}
+                        <img
+                            src="/StolonLogo.png"
+                            alt="Stolon Logo"
+                            style="width: 150px; height: 150px;"
+                        />
+                    {:else}
+                        <img
+                            src="/StolonDark.png"
+                            alt="Stolon Logo Dark"
+                            style="width: 150px; height: 150px;"
+                        />
+                    {/if}
     </div>
 
     <div class="chat-area" class:startup={messages.length === 0}>
@@ -313,6 +338,7 @@
                 <button
                     class="icon-button left-icon-btn"
                     onclick={() => (leftIconActive = !leftIconActive)}
+                    title={leftIconActive ? "Disable history mode" : "Enable history mode"}
                     aria-label="Toggle left icon"
                 >
                     {#if !leftIconActive}
@@ -366,6 +392,7 @@
                     <button
                         class="icon-button microphone-btn"
                         aria-label="Microphone"
+                        title="Dictate"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -382,6 +409,7 @@
                     <button
                         class="icon-button voiceover-btn"
                         aria-label="Voice over"
+                        title="Use voice"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -411,13 +439,102 @@
 ```
 
 <style>
+    :root {
+    /* Brand */
+    --brand: #3e9b45;
+    --brand-dark: #15803d;
+    --brand-soft: #dcfce7;
+    --brand-glow: rgba(62, 155, 69, 0.15);
+
+    /* Backgrounds */
+    --bg: #ffffff;
+    --bg-soft: #f9fafb;
+    --bg-muted: #f3f4f6;
+
+    /* Text */
+    --text: #000000;
+    --text-muted: #6b7280;
+    --text-soft: #9ca3af;
+
+    /* Borders */
+    --border: #e5e7eb;
+    --border-strong: #86efac;
+
+    /* Cards */
+    --card-bg: #ffffff;
+    --card-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.1);
+
+    /* Sidebar */
+    --sidebar-bg: #ffffff;
+
+    /* Inputs */
+    --input-bg: #ffffff;
+    --input-border: #e5e7eb;
+    --input-focus: #3e9b45;
+
+    /* Buttons */
+    --btn-bg: #f3f4f6;
+    --btn-text: #000000;
+    --btn-hover: #e5e7eb;
+
+    /* Avatars */
+    --avatar-ai: #3e9b45;
+    --avatar-user: #ec2025;
+
+    /* Grid */
+    --grid-line: rgba(62, 155, 69, 0.05);
+}
+
+/* ===== DARK MODE ===== */
+
+:root[data-theme="dark"] {
+    --brand: #4ade80;
+    --brand-dark: #22c55e;
+    --brand-soft: #052e16;
+    --brand-glow: rgba(74, 222, 128, 0.25);
+
+    --bg: #0b0f0d;
+    --bg-soft: #111827;
+    --bg-muted: #1f2937;
+
+    --text: #f9fafb;
+    --text-muted: #9ca3af;
+    --text-soft: #6b7280;
+
+    --border: #1f2937;
+    --border-strong: #166534;
+
+    --card-bg: #111827;
+    --card-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+
+    --sidebar-bg: #0f172a;
+
+    --input-bg: #020617;
+    --input-border: #1f2937;
+    --input-focus: #4ade80;
+
+    --btn-bg: #020617;
+    --btn-text: #f9fafb;
+    --btn-hover: #1f2937;
+
+    --avatar-ai: #4ade80;
+    --avatar-user: #f87171;
+
+    --grid-line: rgba(74, 222, 128, 0.06);
+}
+
     :global(body) {
         margin: 0;
         padding: 0;
         overflow: hidden;
         font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: #ffffff; /* Light background for black text */
-        color: #000000;
+        background-color: var(--bg);
+        color: var(--text);
+
     }
 
     :global(body)::before {
@@ -459,7 +576,7 @@
     }
 
     /* Burger open */
-    .burger {
+    .burger  {
         position: fixed;
         top: 16px;
         left: 16px;
@@ -548,7 +665,7 @@
     }
 
     .chat-area {
-        background-color: transparent;
+        
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -644,6 +761,10 @@
     .ai-bubble :global(p) {
         margin: 0 0 10px 0;
         color: #000000;
+    }
+    .ai-bubble :global(a) {
+        color: #3e9b45;
+        text-decoration: underline;
     }
     .ai-bubble :global(pre) {
         background: #f9fafb;
@@ -937,7 +1058,7 @@
         border-color: #86efac;
     }
 
-    .card-nextcloud .price-label,
+
     .card-nextcloud .currency,
     .card-nextcloud .amount,
     .card-nextcloud .period {
@@ -1119,6 +1240,11 @@
             z-index: 1200;
         }
 
+    .theme-toggle{top: 12px;
+            left: 12px;
+            z-index: 1200;
+            margin-top: -23px;}
+
         .layout-container {
             display: flex;
             flex-direction: column;
@@ -1180,4 +1306,164 @@
             border-radius: 20px;
         }
     }
+    :root {
+    --bg: #ffffff;
+    --text: #000000;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+}
+
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+    --card-bg: #020617;
+    --border: #1e293b;
+}
+.theme-toggle{
+    background: #f3f4f6;
+    color: #000000;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1001;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.toggle-light {
+    position: sticky; /* sticks inside sidebar */
+    top: 16px;        /* distance from top */
+    right: 50px;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 1200;
+    float: right;
+    cursor: pointer;
+}
+.toggle-theme{
+    background: #f3f4f6;
+        color: #000000;
+        padding: 6px;
+        border-radius: 8px;
+        cursor: pointer;
+        z-index: 1001;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+
+/* ===== APPLY ===== */
+:global(body) {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.card,
+.sidebar,
+.input-wrapper,
+.messageBox {
+    background-color: var(--card-bg);
+    border-color: var(--border);
+}
+.card h4 {
+    color: var(--text);
+}
+.card .price-label {
+    color: black;
+}
+h1,
+h4,
+.menu-item,
+.bubble
+ {
+    color: var(--text);
+}
+.bubble-assistant a{
+    color: var(--border-strong);
+    text-decoration: underline;
+}
+
+.chat-area,
+.chat-area .messages-container,
+.chat-area .input-area,
+.input-wrapper,
+.messageBox {
+
+  color: var(--text);
+}
+
+/* Bubbles */
+.chat-area .bubble,
+.chat-area .ai-bubble,
+.chat-area .user-bubble {
+  color: var(--text);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent 8%);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* Assistant bubble (code / markdown) */
+.chat-area .ai-bubble {
+  background: color-mix(in srgb, var(--card-bg) 86%, #f9fafb 14%);
+}
+.chat-area .ai-bubble :global(pre) {
+  background: color-mix(in srgb, var(--card-bg) 84%, #f3f4f6 16%);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.chat-area .ai-bubble :global(code) {
+  color: var(--text);
+}
+
+/* User bubble */
+.chat-area .user-bubble {
+  background: color-mix(in srgb, var(--card-bg) 80%, #f3f4f6 20%);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+/* Avatars */
+.chat-area .avatar.ai { background: var(--avatar-ai); color: #fff; }
+.chat-area .avatar.user { background: var(--avatar-user); color: #fff; }
+
+/* Input area and textarea */
+.input-wrapper,
+.messageBox {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+#messageInput,
+.input-wrapper textarea,
+.messageBox textarea {
+  color: var(--text);
+  background: transparent;
+  caret-color: var(--text);
+}
+
+/* Icon colors */
+.icon-button svg { color: color-mix(in srgb, var(--text) 68%, var(--text-muted, #6b7280) 32%); }
+.icon-button:hover svg { color: var(--brand); }
+
+/* Make sure message text injected by marked is readable */
+.chat-area :global(p),
+.chat-area :global(li),
+.chat-area :global(h1),
+.chat-area :global(h2),
+.chat-area :global(h3),
+.chat-area :global(pre),
+.chat-area :global(code) {
+  color: var(--text);
+}
+
+/* Mobile / small adjustments (override duplicates) */
+@media (max-width: 768px) {
+  .input-area { background: var(--card-bg); }
+  .sidebar { background: var(--card-bg); border-right: 1px solid var(--border); }
+}
+
 </style>
