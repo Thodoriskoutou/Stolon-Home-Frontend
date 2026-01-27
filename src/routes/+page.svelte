@@ -288,6 +288,7 @@ $effect(() => {
             <div class="mobile-cards-wrapper">
                 {@render cardsContent()}
             </div>
+            </div>
         </aside>
         
     </div>

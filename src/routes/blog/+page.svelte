@@ -26,6 +26,45 @@
 
 
 <style>
+
+
+:root[data-theme="dark"] {
+    --brand: #4ade80;
+    --brand-dark: #22c55e;
+    --brand-soft: #052e16;
+    --brand-glow: rgba(74, 222, 128, 0.25);
+
+    --bg: #0b0f0d;
+    --bg-soft: #111827;
+    --bg-muted: #1f2937;
+
+    --text: #f9fafb;
+    --text-muted: #9ca3af;
+    --text-soft: #6b7280;
+
+    --border: #1f2937;
+    --border-strong: #166534;
+
+    --card-bg: #111827;
+    --card-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+
+    --sidebar-bg: #0f172a;
+
+    --input-bg: #020617;
+    --input-border: #1f2937;
+    --input-focus: #4ade80;
+
+    --btn-bg: #020617;
+    --btn-text: #f9fafb;
+    --btn-hover: #1f2937;
+
+    --avatar-ai: #4ade80;
+    --avatar-user: #f87171;
+
+    --grid-line: rgba(74, 222, 128, 0.06);
+}
 :global(body) {
     margin: 0;
     padding: 0;
