@@ -18,7 +18,7 @@ type ChatArea = {
 
 let chatContainer: HTMLElement;
 let messageInputel: HTMLTextAreaElement;
-let messages: {role: string, content: string}[] = $state([]);
+let messages: {role: string, content: string, isGreeting?: boolean}[] = $state([]);
 let userInput = $state("");
 let isGenerating = $state(false);
 let isOpen = $state(false); // For floating view
@@ -49,8 +49,11 @@ function loadMessages() {
     const saved = localStorage.getItem("chat_history");
     if (saved) {
         messages = JSON.parse(saved);
+        if (messages.length > 0 && messages[0].role === "assistant") {
+            messages[0].isGreeting = true;
+        }
     } else {
-        messages = [{ role: "assistant", content: chatTrans.greeting || "Hello!" }];
+        messages = [{ role: "assistant", content: chatTrans.greeting || "Hello!", isGreeting: true }];
     }
 }
 
@@ -100,7 +103,7 @@ function clearChat() {
     if (typeof window !== "undefined") {
         localStorage.removeItem("chat_history");
         localStorage.removeItem("chat_session_id");
-        messages = [{ role: "assistant", content: chatTrans.greeting || "Hello!" }];
+        messages = [{ role: "assistant", content: chatTrans.greeting || "Hello!", isGreeting: true }];
     }
 }
 
@@ -137,13 +140,9 @@ $effect(() => {
     }
 });
 
-let promptPills = $state<string[]>(
-    (pills && pills.length) ? pills : (chatTrans?.prompt_pills || [
-
-    ])
+let promptPills = $derived(
+    Array.from(new Set((pills && pills.length) ? pills : (chatTrans?.prompt_pills || [])))
 );
-
-const loopedPrompts = $derived([...promptPills, ...promptPills]);
 
 function usePrompt(prompt: string) {
     userInput = prompt;
@@ -187,7 +186,9 @@ function usePrompt(prompt: string) {
                                     {chatTrans.ai_name || "Stolonas"}
                                 </div>
                                 <div class="message-content">
-                                    {#if msg.content && msg.content.length}
+                                    {#if msg.isGreeting}
+                                        {@html marked(chatTrans.greeting || "Hello!")}
+                                    {:else if msg.content && msg.content.length}
                                         {@html marked(msg.content)}
                                     {:else}
                                         <Icon icon="svg-spinners:3-dots-bounce" />
@@ -209,7 +210,7 @@ function usePrompt(prompt: string) {
             {#if messages.length <= 1 && promptPills?.length}
             <div class="prompt-carousel">
                 <div class="prompt-track">
-                    {#each loopedPrompts as pill}
+                    {#each promptPills as pill}
                         <button
                             class="prompt-pill"
                             onclick={() => usePrompt(pill)}
@@ -464,7 +465,6 @@ function usePrompt(prompt: string) {
         width: 100%;
         max-width: 768px;
         margin: 18px auto 18px auto;
-        overflow: hidden;
         padding: 0 16px;
         position: relative;
     }
@@ -474,20 +474,23 @@ function usePrompt(prompt: string) {
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        gap: 14px 18px;
+        gap: 10px;
         width: 100%;
+        padding-top: 1rem;
     }
+
 
     .prompt-pill {
         flex: 0 1 auto;
-        white-space: nowrap;
         background: var(--card-bg);
         border: 1.5px solid var(--border);
         color: var(--text);
-        padding: 10px 22px;
-        border-radius: 999px;
-        font-size: 15px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
         font-weight: 500;
+        text-align: center;
+        line-height: 1.3;
         letter-spacing: 0.01em;
         box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         cursor: pointer;
@@ -516,32 +519,7 @@ function usePrompt(prompt: string) {
         }
     }
 
-    .prompt-pill {
-        flex: 0 0 auto; 
-        white-space: nowrap;
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        color: var(--text);
-        padding: 8px 14px;
-        border-radius: 999px;
-        font-size: 15px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-top:4px;
-    }
 
-    .prompt-pill:hover {
-        border-color: var(--brand);
-        color: var(--brand);
-        background: var(--btn-hover);
-    }
-
-
-    .prompt-pill:hover {
-        border-color: var(--brand);
-        color: var(--brand);
-        background: var(--btn-hover);
-    }
     
     
     .input-area {

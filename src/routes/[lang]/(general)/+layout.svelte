@@ -76,6 +76,11 @@
     <!-- Drawer / Sidebar -->
     <div class="drawer">
         <aside class="sidebar" class:active={activeMenu}>
+            <div class="sidebar-logo">
+                <a href={`/${language}`}>
+                    <img src={theme === "light" ? "/logo-light.png" : "/logo-dark.png"} alt={translations[language].general.name} />
+                </a>
+            </div>
             <ul class="menu">
                 {#each menuItems as item}
                 <li>
@@ -226,6 +231,18 @@
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
+    }
+
+    .sidebar-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+        padding: 0 10px;
+    }
+    
+    .sidebar-logo img {
+        height: 64px;
+        width: auto;
     }
 
     .menu {
